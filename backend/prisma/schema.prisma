@@ -1,0 +1,164 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum StatutLecture {
+  A_LIRE
+  EN_COURS
+  LU
+  ABANDONNE
+}
+
+model Utilisateur {
+  id              Int      @id @default(autoincrement())
+  email           String   @unique
+  motDePasseHash  String   @map("mot_de_passe_hash")
+  pseudo          String
+  dateInscription DateTime @default(now()) @map("date_inscription")
+  avatarUrl       String?  @map("avatar_url")
+
+  bibliotheques Bibliotheque[]
+
+  @@map("utilisateur")
+}
+
+// Cache local des livres récupérés via Google Books API
+model Livre {
+  id              Int       @id @default(autoincrement())
+  idExterne       String    @unique @map("id_externe") // id du volume Google Books
+  titre           String
+  description     String?
+  couvertureUrl   String?   @map("couverture_url")
+  datePublication DateTime? @map("date_publication")
+  editeur         String?
+  langue          String?
+  nombrePages     Int?      @map("nombre_pages")
+
+  auteurs       LivreAuteur[]
+  genres        LivreGenre[]
+  bibliotheques Bibliotheque[]
+
+  @@map("livre")
+}
+
+model Auteur {
+  id  Int    @id @default(autoincrement())
+  nom String
+
+  livres LivreAuteur[]
+
+  @@map("auteur")
+}
+
+// LIVRE (0,n) --- ECRIT_PAR --- (1,n) AUTEUR
+model LivreAuteur {
+  livreId  Int @map("id_livre")
+  auteurId Int @map("id_auteur")
+
+  livre  Livre  @relation(fields: [livreId], references: [id], onDelete: Cascade)
+  auteur Auteur @relation(fields: [auteurId], references: [id], onDelete: Cascade)
+
+  @@id([livreId, auteurId])
+  @@map("livre_auteur")
+}
+
+model Genre {
+  id  Int    @id @default(autoincrement())
+  nom String @unique
+
+  livres LivreGenre[]
+
+  @@map("genre")
+}
+
+// LIVRE (0,n) --- APPARTIENT_A --- (0,n) GENRE
+model LivreGenre {
+  livreId Int @map("id_livre")
+  genreId Int @map("id_genre")
+
+  livre Livre @relation(fields: [livreId], references: [id], onDelete: Cascade)
+  genre Genre @relation(fields: [genreId], references: [id], onDelete: Cascade)
+
+  @@id([livreId, genreId])
+  @@map("livre_genre")
+}
+
+// Critères de notation (émotions, spicy, action, world building, romance, ...)
+model Critere {
+  id          Int     @id @default(autoincrement())
+  nom         String  @unique
+  description String?
+
+  notes NoteCritere[]
+
+  @@map("critere")
+}
+
+// Entrée "un livre dans la bibliothèque d'un utilisateur"
+// Porte les infos communes, indépendantes des listes : dates de lecture, note globale, avis, notes critères.
+model Bibliotheque {
+  id               Int       @id @default(autoincrement())
+  utilisateurId    Int       @map("id_utilisateur")
+  livreId          Int       @map("id_livre")
+  dateAjout        DateTime  @default(now()) @map("date_ajout")
+  dateDebutLecture DateTime? @map("date_debut_lecture")
+  dateFinLecture   DateTime? @map("date_fin_lecture")
+  pageActuelle     Int?      @map("page_actuelle") // sert au calcul de progression -> passage auto en "Lu"
+  noteGlobale      Int?      @map("note_globale") // 1 à 5, validé en amont (zod) à l'écriture
+
+  utilisateur Utilisateur @relation(fields: [utilisateurId], references: [id], onDelete: Cascade)
+  livre       Livre       @relation(fields: [livreId], references: [id], onDelete: Cascade)
+
+  // Un livre peut être dans plusieurs listes en même temps, ajoutées/retirées indépendamment
+  statuts       BibliothequeStatut[]
+  avis          Avis?
+  notesCriteres NoteCritere[]
+
+  @@unique([utilisateurId, livreId])
+  @@map("bibliotheque")
+}
+
+// Association BIBLIOTHEQUE <-> liste (à lire, en cours, lu, abandonné)
+// Une entrée Bibliotheque peut avoir 0 à N statuts actifs simultanément.
+model BibliothequeStatut {
+  id             Int           @id @default(autoincrement())
+  bibliothequeId Int           @map("id_bibliotheque")
+  statut         StatutLecture
+  dateAjout      DateTime      @default(now()) @map("date_ajout")
+
+  bibliotheque Bibliotheque @relation(fields: [bibliothequeId], references: [id], onDelete: Cascade)
+
+  @@unique([bibliothequeId, statut])
+  @@map("bibliotheque_statut")
+}
+
+model Avis {
+  id               Int      @id @default(autoincrement())
+  bibliothequeId   Int      @unique @map("id_bibliotheque")
+  texte            String
+  dateCreation     DateTime @default(now()) @map("date_creation")
+  dateModification DateTime @updatedAt @map("date_modification")
+
+  bibliotheque Bibliotheque @relation(fields: [bibliothequeId], references: [id], onDelete: Cascade)
+
+  @@map("avis")
+}
+
+// Note d'un critère spécifique (émotions, spicy, ...) pour une entrée de bibliothèque
+model NoteCritere {
+  id             Int @id @default(autoincrement())
+  bibliothequeId Int @map("id_bibliotheque")
+  critereId      Int @map("id_critere")
+  valeur         Int // 1 à 5, validé en amont (zod) à l'écriture
+
+  bibliotheque Bibliotheque @relation(fields: [bibliothequeId], references: [id], onDelete: Cascade)
+  critere      Critere      @relation(fields: [critereId], references: [id], onDelete: Cascade)
+
+  @@unique([bibliothequeId, critereId])
+  @@map("note_critere")
+}
