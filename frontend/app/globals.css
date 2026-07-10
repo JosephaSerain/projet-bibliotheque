@@ -1,5 +1,14 @@
 :root {
-  color-scheme: light dark;
+  --paper: #faf6ed;
+  --paper-shadow: #efe8d6;
+  --ink: #1f2a44;
+  --ink-soft: #5a6478;
+  --tab-alire: #a98b4e;
+  --tab-encours: #c4634a;
+  --tab-lu: #5b7a5b;
+  --tab-abandonne: #8b7b7b;
+  --line: #dcd3bc;
+  color-scheme: light;
 }
 
 * {
@@ -8,5 +17,253 @@
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-inter), sans-serif;
+}
+
+/* ---------- NAVBAR ---------- */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 28px;
+}
+
+.logo {
+  font-family: var(--font-fraunces), serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: -0.01em;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.logo svg {
+  width: 30px;
+  height: auto;
+  display: block;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+}
+
+.nav-links a,
+.nav-links button {
+  appearance: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  padding: 8px 14px;
+  border-radius: 4px;
+  position: relative;
+}
+
+.nav-links a.active {
+  color: var(--ink);
+}
+
+.nav-links a.active::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 2px;
+  height: 2px;
+  background: var(--tab-encours);
+  border-radius: 2px;
+}
+
+.nav-links a:hover {
+  color: var(--ink);
+}
+
+.nav-links button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.nav-links a:focus-visible,
+.nav-links button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+
+.icon-btn:hover {
+  color: var(--ink);
+  border-color: var(--ink-soft);
+}
+
+.icon-btn:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+main {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+/* ---------- LIBRARY VIEW ---------- */
+.page-title {
+  font-family: var(--font-fraunces), serif;
+  font-size: 1.7rem;
+  font-weight: 500;
+  margin: 0 0 4px;
+}
+
+.page-sub {
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  margin: 0 0 22px;
+}
+
+.filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.filter {
+  appearance: none;
+  cursor: pointer;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink-soft);
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 6px 13px;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.filter .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+}
+
+.filter.on {
+  color: var(--paper);
+  border-color: transparent;
+}
+
+.filter:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 20px 16px;
+}
+
+.card {
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  text-align: left;
+  padding: 0;
+  font-family: var(--font-inter), sans-serif;
+}
+
+.card:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.card-cover {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  box-shadow: 0 4px 10px rgba(31, 42, 68, 0.14);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: 8px;
+  transition: transform 0.15s ease;
+}
+
+.card:hover .card-cover {
+  transform: translateY(-4px);
+}
+
+.card-cover span {
+  font-family: var(--font-fraunces), serif;
+  color: #faf6ed;
+  font-size: 0.72rem;
+  line-height: 1.2;
+}
+
+.card-flags {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  display: flex;
+  gap: 4px;
+}
+
+.flag-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.6);
+}
+
+.card-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.card-author {
+  font-size: 0.74rem;
+  color: var(--ink-soft);
+  margin: 2px 0 0;
+}
+
+.empty-state {
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  padding: 40px 0;
+  text-align: center;
 }
