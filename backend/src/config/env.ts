@@ -14,4 +14,5 @@ export const env = {
   jwtSecret: required("JWT_SECRET"),
   jwtExpiresIn: process.env.JWT_EXPIRES_IN ?? "7d",
   googleBooksApiKey: process.env.GOOGLE_BOOKS_API_KEY ?? "",
+  frontendUrl: process.env.FRONTEND_URL ?? "http://localhost:3000",
 };
