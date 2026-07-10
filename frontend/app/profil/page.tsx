@@ -7,6 +7,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { apiFetch } from "../../lib/api";
 import { User, useAuth } from "../../lib/auth-context";
+import { Modal } from "../components/Modal";
 
 export default function ProfilPage() {
   const router = useRouter();
@@ -151,31 +152,33 @@ export default function ProfilPage() {
           <div className="danger-zone">
             <p className="danger-zone-title">Zone dangereuse</p>
 
-            {!confirmingDelete ? (
-              <button type="button" className="btn-danger" onClick={() => setConfirmingDelete(true)}>
-                Supprimer mon compte
-              </button>
-            ) : (
-              <>
-                <p className="danger-warning">
-                  Cette action est irréversible : ta bibliothèque, tes avis et tes notes seront définitivement
-                  supprimés.
-                </p>
-                <div className="danger-actions">
-                  <button type="button" className="btn-danger-confirm" onClick={handleDelete} disabled={deleting}>
-                    {deleting ? "Suppression..." : "Confirmer la suppression"}
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-secondary"
-                    onClick={() => setConfirmingDelete(false)}
-                    disabled={deleting}
-                  >
-                    Annuler
-                  </button>
-                </div>
-              </>
-            )}
+            <button type="button" className="btn-danger" onClick={() => setConfirmingDelete(true)}>
+              Supprimer mon compte
+            </button>
+
+            <Modal
+              open={confirmingDelete}
+              onClose={() => setConfirmingDelete(false)}
+              title="Supprimer ton compte ?"
+            >
+              <p className="danger-warning">
+                Cette action est irréversible : ta bibliothèque, tes avis et tes notes seront définitivement
+                supprimés.
+              </p>
+              <div className="danger-actions">
+                <button type="button" className="btn-danger-confirm" onClick={handleDelete} disabled={deleting}>
+                  {deleting ? "Suppression..." : "Confirmer la suppression"}
+                </button>
+                <button
+                  type="button"
+                  className="btn-secondary"
+                  onClick={() => setConfirmingDelete(false)}
+                  disabled={deleting}
+                >
+                  Annuler
+                </button>
+              </div>
+            </Modal>
           </div>
         </section>
 
