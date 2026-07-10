@@ -41,8 +41,8 @@ via la table `bibliotheque_statut`, plutôt qu'un champ `statut` unique sur `bib
 
 ## Epics (voir user stories complètes dans le cadrage du projet)
 
-- **A** — Authentification et compte
-- **B** — Recherche et fiche livre (Google Books API)
+- **A** — Authentification et compte ✔️
+- **B** — Recherche et fiche livre (Google Books API) ⏳
 - **C** — Bibliothèque personnelle (listes)
 - **D** — Notation & avis
 - **E** — Profils & statistiques
