@@ -412,6 +412,24 @@ main {
   margin: -6px 0 16px;
 }
 
+.form-success {
+  color: var(--tab-lu);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.auth-switch {
+  margin-top: 20px;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  text-align: center;
+}
+.auth-switch a {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
 .btn-primary {
   width: 100%;
   border: none;

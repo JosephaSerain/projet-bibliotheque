@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { toast } from "react-toastify";
@@ -66,6 +67,10 @@ export function LoginForm() {
       <button type="submit" className="btn-primary" disabled={loading}>
         {loading ? "Connexion..." : "Se connecter"}
       </button>
+
+      <p className="auth-switch">
+        <Link href="/mot-de-passe-oublie">Mot de passe oublié ?</Link>
+      </p>
     </form>
   );
 }
