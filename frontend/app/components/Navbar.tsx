@@ -9,7 +9,7 @@ export function Navbar() {
 
   return (
     <nav className="navbar">
-      <div className="logo">
+      <Link href="/" className="logo">
         <svg viewBox="0 0 140 116" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Nesta's Library">
           <g fill="#1F2A44">
             <path d="M26,28 l2,5 5,2 -5,2 -2,5 -2,-5 -5,-2 5,-2 Z" />
@@ -26,7 +26,7 @@ export function Navbar() {
           </g>
         </svg>
         Nesta&apos;s Library
-      </div>
+      </Link>
       <div className="nav-right">
         <div className="nav-links">
           <Link href="/" className={pathname === "/" ? "active" : undefined}>
