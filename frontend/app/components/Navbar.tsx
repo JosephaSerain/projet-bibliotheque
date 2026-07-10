@@ -1,9 +1,8 @@
 "use client";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { UserMenu } from "./UserMenu";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -37,9 +36,7 @@ export function Navbar() {
             Statistiques
           </button>
         </div>
-        <Link href="/connexion" className="icon-btn" aria-label="Connexion">
-          <FontAwesomeIcon icon={faUser} />
-        </Link>
+        <UserMenu />
       </div>
     </nav>
   );

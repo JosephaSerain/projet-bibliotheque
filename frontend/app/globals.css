@@ -8,7 +8,16 @@
   --tab-lu: #5b7a5b;
   --tab-abandonne: #8b7b7b;
   --line: #dcd3bc;
+  --danger: #b3402c;
   color-scheme: light;
+
+  /* Thème react-toastify (variables prévues par la lib pour éviter d'overrider ses classes) */
+  --toastify-color-light: var(--paper);
+  --toastify-text-color-light: var(--ink);
+  --toastify-toast-background: var(--paper);
+  --toastify-font-family: var(--font-inter), sans-serif;
+  --toastify-color-progress-success: var(--tab-lu);
+  --toastify-color-progress-error: var(--danger);
 }
 
 * {
@@ -109,6 +118,12 @@ body {
 }
 
 .icon-btn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -116,6 +131,52 @@ body {
   height: 34px;
   color: var(--ink-soft);
   font-size: 0.85rem;
+}
+
+.user-menu {
+  position: relative;
+}
+
+.user-menu-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(31, 42, 68, 0.14);
+  min-width: 180px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 20;
+}
+
+.user-menu-dropdown a,
+.user-menu-dropdown button {
+  appearance: none;
+  border: none;
+  background: transparent;
+  text-align: left;
+  text-decoration: none;
+  color: var(--ink);
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.85rem;
+  padding: 9px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.user-menu-dropdown a:hover,
+.user-menu-dropdown button:hover {
+  background: var(--paper-shadow);
+}
+
+.user-menu-dropdown a:focus-visible,
+.user-menu-dropdown button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
 }
 
 .icon-btn:hover {
@@ -266,4 +327,111 @@ main {
   font-size: 0.85rem;
   padding: 40px 0;
   text-align: center;
+}
+
+/* ---------- AUTH FORMS ---------- */
+.auth-page {
+  max-width: 380px;
+  margin: 60px auto 0;
+  padding: 0 24px;
+}
+.auth-tabs {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+.auth-tab {
+  appearance: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  padding: 10px 2px;
+  position: relative;
+}
+.auth-tab.active {
+  color: var(--ink);
+}
+.auth-tab.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--tab-encours);
+}
+.auth-tab:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+.auth-title {
+  font-family: var(--font-fraunces), serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 0 0 4px;
+}
+.auth-sub {
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  margin: 0 0 28px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+.form-field label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+.form-field input {
+  border: 1px solid var(--line);
+  background: transparent;
+  border-radius: 4px;
+  padding: 10px 12px;
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.88rem;
+  color: var(--ink);
+}
+.form-field input:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 1px;
+}
+
+.form-error {
+  color: var(--danger);
+  font-size: 0.8rem;
+  margin: -6px 0 16px;
+}
+
+.btn-primary {
+  width: 100%;
+  border: none;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-inter), sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 11px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn-primary:hover {
+  opacity: 0.9;
+}
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.btn-primary:focus-visible {
+  outline: 2px solid var(--tab-encours);
+  outline-offset: 2px;
 }
