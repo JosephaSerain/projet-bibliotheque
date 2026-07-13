@@ -29,6 +29,9 @@ export function Navbar() {
       </Link>
       <div className="nav-right">
         <div className="nav-links">
+          <Link href="/recherche" className={pathname === "/recherche" ? "active" : undefined}>
+            Rechercher
+          </Link>
           <Link href="/" className={pathname === "/" ? "active" : undefined}>
             Ma bibliothèque
           </Link>

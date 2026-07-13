@@ -1,6 +1,10 @@
 import { Router } from "express";
+import { getLivre, searchLivres } from "../controllers/livre.controller";
+import { optionalAuth } from "../middlewares/optionalAuth";
 
 export const livresRouter = Router();
 
-// GET /livres/search?q=...        recherche via Google Books API
-// GET /livres/:id                 fiche détaillée d'un livre (cache local)
+// L'ordre compte : /search doit être déclaré avant /:externalId, sinon Express
+// interpréterait "search" comme une valeur d'externalId.
+livresRouter.get("/search", searchLivres);
+livresRouter.get("/:externalId", optionalAuth, getLivre);
