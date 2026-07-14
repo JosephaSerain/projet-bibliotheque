@@ -11,8 +11,11 @@ export type LivreRecherche = {
   genres: string[];
 };
 
-// Fiche détaillée : mêmes champs + l'id interne et mes listes actuelles (si connecté).
+// Fiche détaillée : mêmes champs + l'id interne et mes infos de bibliothèque (si connecté).
 export type LivreDetail = LivreRecherche & {
   id: number;
   statuts: string[];
+  dateDebutLecture: string | null;
+  dateFinLecture: string | null;
+  pageActuelle: number | null;
 };

@@ -24,12 +24,19 @@ export const getLivre = asyncHandler(async (req: Request, res: Response) => {
   }
 
   let statuts: string[] = [];
+  let dateDebutLecture: Date | null = null;
+  let dateFinLecture: Date | null = null;
+  let pageActuelle: number | null = null;
+
   if (req.userId) {
     const bibliotheque = await prisma.bibliotheque.findUnique({
       where: { utilisateurId_livreId: { utilisateurId: req.userId, livreId: livre.id } },
       include: { statuts: true },
     });
     statuts = bibliotheque?.statuts.map((s) => s.statut) ?? [];
+    dateDebutLecture = bibliotheque?.dateDebutLecture ?? null;
+    dateFinLecture = bibliotheque?.dateFinLecture ?? null;
+    pageActuelle = bibliotheque?.pageActuelle ?? null;
   }
 
   res.json({
@@ -45,5 +52,8 @@ export const getLivre = asyncHandler(async (req: Request, res: Response) => {
     auteurs: livre.auteurs.map((la) => la.auteur.nom),
     genres: livre.genres.map((lg) => lg.genre.nom),
     statuts,
+    dateDebutLecture,
+    dateFinLecture,
+    pageActuelle,
   });
 });

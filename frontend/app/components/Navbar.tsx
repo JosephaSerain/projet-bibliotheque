@@ -32,7 +32,7 @@ export function Navbar() {
           <Link href="/recherche" className={pathname === "/recherche" ? "active" : undefined}>
             Rechercher
           </Link>
-          <Link href="/" className={pathname === "/" ? "active" : undefined}>
+          <Link href="/library" className={pathname === "/library" ? "active" : undefined}>
             Ma bibliothèque
           </Link>
           <button type="button" disabled title="À venir">

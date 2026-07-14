@@ -282,10 +282,25 @@ main {
   box-shadow: 0 4px 10px rgba(31, 42, 68, 0.14);
   overflow: hidden;
   background: var(--paper-shadow);
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: transform 0.15s ease;
+}
+
+.card-flags {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  display: flex;
+  gap: 4px;
+}
+.flag-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.6);
 }
 
 .card:hover .card-cover {
@@ -874,4 +889,28 @@ main {
   line-height: 1.6;
   color: var(--ink);
   white-space: pre-line;
+}
+
+.livre-bibliotheque {
+  margin-bottom: 28px;
+}
+
+.livre-progress-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.livre-progress-fields .form-field {
+  flex: 1;
+  min-width: 130px;
+  margin-bottom: 0;
+}
+
+.livre-progress-form {
+  margin-bottom: 16px;
+}
+.livre-progress-form button[type="submit"] {
+  width: auto;
+  padding: 11px 24px;
 }
